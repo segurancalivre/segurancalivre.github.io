@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguranca Mercado Livre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            background-color: #007BFF;
+            /* Placeholder color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .word {
+            font-size: 32px;
+            margin-top: 20px;
+            color: #333;
+            margin: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <img style="width: -webkit-fill-available;
+    border-radius: inherit;margin: 30px;" src="./ml on.png" alt="">
+    </div>
+
+    <div class="logo">
+        <img style="width: -webkit-fill-available;
+    border-radius: inherit;" src="./seguranca.png" alt="">
+    </div>
+    <div class="word" id="word-display">Loading...</div>
+
+
+    <progress id="progress" max="100" value="0"></progress>
+
+    <div>
+        <h4 style="text-align: center;">
+            Somente Informe a Palavra para o Entregador no Momento da Entrega.
+        </h4>
+    </div>
+
+    <script>
+        const words = [
+            "Inovação", "Tecnologia", "Design", "Desenvolvimento", "Marketing",
+            "Estratégia", "Criatividade", "Colaboração", "Eficiência", "Sustentabilidade",
+            "Visão", "Sucesso", "Crescimento", "Análise", "Engajamento",
+            "Liderança", "Desempenho", "Otimização", "Sinergia", "Dinâmica",
+            "Conectividade", "Inspiração", "Tendências", "Soluções", "Empoderamento",
+            "Integração", "Impacto", "Diversidade", "Resiliência", "Transformação",
+            "Experiência", "Inteligência", "Simplicidade", "Agilidade", "Confiança",
+            "Flexibilidade", "Adaptabilidade", "Networking", "Suporte", "Exploração",
+            "Inovação", "Potencial", "Qualidade", "Compromisso", "Realização",
+            "Recursos", "Motivação", "Exploração", "Explorar", "Descoberta",
+            "Parceria", "Engajamento", "Simplicidade", "Descoberta", "Empatia"
+        ];
+
+        let index = 0;
+        const wordDisplay = document.getElementById('word-display');
+
+        function changeWord() {
+            wordDisplay.textContent = words[index];
+            index = (index + 1) % words.length;
+        }
+
+        changeWord();
+        setInterval(changeWord, 60000); // Change word every 60 seconds
+    </script>
+
+    <script>
+        const makeLoader = (progressEl, updateProgressCount, initialProgress = 0) => {
+            let progressCount = initialProgress;
+            const load = () => {
+                progressCount = updateProgressCount(progressCount);
+                progressEl.value = progressCount;
+                requestAnimationFrame(load); // chama novamente para o próximo quadro
+            };
+            return load;
+        };
+
+        // Faz a barra de progresso completar em 60 segundos e reiniciar
+        const incrementToCompleteIn60Seconds = (i, totalTime = 60000) => {
+            const progressIncrement = (100 / totalTime) * (1000 / 60); // 60 FPS
+            if (i >= 100) {
+                return 0; // Reinicia o progresso ao atingir 100
+            }
+            return Math.min(i + progressIncrement, 100); // Não ultrapassa 100
+        };
+
+        const progressEl = document.getElementById("progress");
+        const loader = makeLoader(progressEl, (progressCount) => incrementToCompleteIn60Seconds(progressCount));
+        requestAnimationFrame(loader);
+    </script>
+
+</body>
+
+</html>
